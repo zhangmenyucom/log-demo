@@ -23,6 +23,7 @@ public class TestController extends BaseAction {
 	@ResponseBody
 	@RequestMapping("/query")
 	public List<Test> queryTest(Test test, HttpServletRequest request, HttpServletResponse response) {
+	    log.debug("这只是一个测试");
 		return testService.queryTest(test);
 	}
 
