@@ -1,9 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.taylor</groupId>
+
+	<parent>
+		<groupId>com.taylor</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>log-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -24,7 +31,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.1.3.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -84,7 +90,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.8</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -99,13 +104,8 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.21</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> <version>1.7.21</version> </dependency> -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -133,4 +133,66 @@
 			<version>2.2.3</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<finalName>log-demo</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*/*</include>
+					<include>*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<root.logger.level>debug,info,error</root.logger.level>
+				<log.file.home>D:/logs/logback</log.file.home>
+				<jdbc.url>
+					<![CDATA[
+					jdbc:mysql://localhost:3306/log_demo?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8
+					]]>
+				</jdbc.url>
+				<jdbc.username>root</jdbc.username>
+				<jdbc.password>ilovemysql^^^</jdbc.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<root.logger.level>debug,info,error</root.logger.level>
+				<log.file.home>/usr/apps/logs/log-demo/logback</log.file.home>
+				<jdbc.url>
+					<![CDATA[
+					jdbc:mysql://192.168.186.128:3306/log_demo?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8
+					]]>
+				</jdbc.url>
+				<jdbc.username>root</jdbc.username>
+				<jdbc.password>110110</jdbc.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>online</id>
+			<properties>
+				<root.logger.level>info,error</root.logger.level>
+				<log.file.home>/usr/apps/logs/log-demo/logback</log.file.home>
+				<jdbc.url>
+					<![CDATA[
+					jdbc:mysql://localhost:3306/log_demo?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8
+					]]>
+				</jdbc.url>
+				<jdbc.username>root</jdbc.username>
+				<jdbc.password>ilovemysql^^^</jdbc.password>
+			</properties>
+		</profile>
+	</profiles>
 </project>
