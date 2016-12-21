@@ -146,6 +146,26 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>  
+                <artifactId>maven-antrun-plugin</artifactId>  
+                <executions>  
+                    <execution>  
+                        <id>copy-war</id>  
+                        <phase>package</phase>  
+                        <goals>  
+                            <goal>run</goal>  
+                        </goals>  
+                        <configuration>  
+                            <tasks>  
+                                <echo message="Copy war file to Tomcat webapps...."/>  
+                                <copy file="target/log-demo.war" todir="/home/work/jenkins_deploy" overwrite="true"/>
+                            </tasks>  
+                        </configuration>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+		</plugins>
 	</build>
 
 	<profiles>
