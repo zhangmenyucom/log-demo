@@ -147,30 +147,33 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>  
-                <artifactId>maven-antrun-plugin</artifactId>  
-                <executions>  
-                    <execution>  
-                        <id>copy-war</id>  
-                        <phase>package</phase>  
-                        <goals>  
-                            <goal>run</goal>  
-                        </goals>  
-                        <configuration>  
-                            <tasks>  
-                                <echo message="Copy war file to Tomcat webapps...."/>  
-                                <copy file="target/log-demo.war" todir="/home/work/jenkins_deploy" overwrite="true"/>
-                            </tasks>  
-                        </configuration>  
-                    </execution>  
-                </executions>  
-            </plugin>  
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-war</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo message="Copy war file to Tomcat webapps...." />
+								<copy file="target/log-demo.war" todir="${war.dir}" overwrite="true" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<profiles>
 		<profile>
 			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<root.logger.level>debug,info,error</root.logger.level>
 				<log.file.home>D:/logs/logback</log.file.home>
@@ -181,13 +184,11 @@
 				</jdbc.url>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>ilovemysql^^^</jdbc.password>
+				<war.dir>D:/Javaee/mypackage</war.dir>
 			</properties>
 		</profile>
 		<profile>
 			<id>test</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
 				<root.logger.level>debug,info,error</root.logger.level>
 				<log.file.home>/usr/apps/logs/log-demo/logback</log.file.home>
@@ -198,6 +199,7 @@
 				</jdbc.url>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>110110</jdbc.password>
+				<war.dir>/home/work/jenkins_deploy</war.dir>
 			</properties>
 		</profile>
 		<profile>
@@ -212,6 +214,7 @@
 				</jdbc.url>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>ilovemysql^^^</jdbc.password>
+				<war.dir>/home/work/jenkins_deploy</war.dir>
 			</properties>
 		</profile>
 	</profiles>
