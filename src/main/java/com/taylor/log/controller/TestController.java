@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dianping.cat.Cat;
 import com.taylor.log.entity.Test;
 import com.taylor.log.service.TestService;
 
@@ -23,6 +24,7 @@ public class TestController extends BaseAction {
 	@ResponseBody
 	@RequestMapping("/query")
 	public List<Test> queryTest(Test test, HttpServletRequest request, HttpServletResponse response) {
+		 Cat.logEvent("error","this is a test");
 	    log.debug("这只是一个测试");
 	    log.info("这又是一个测试");
 		return testService.queryTest(test);
