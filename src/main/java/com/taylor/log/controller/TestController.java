@@ -24,9 +24,10 @@ public class TestController extends BaseAction {
 	@ResponseBody
 	@RequestMapping("/query")
 	public List<Test> queryTest(Test test, HttpServletRequest request, HttpServletResponse response) {
-		 Cat.logEvent("error","this is a test");
-	    log.debug("这只是一个测试");
-	    log.info("这又是一个测试");
+		Cat.logEvent("error", "this is a test");
+		Cat.newTransaction("test", "hahahahahahahah");
+		log.debug("这只是一个测试");
+		log.info("这又是一个测试");
 		return testService.queryTest(test);
 	}
 
