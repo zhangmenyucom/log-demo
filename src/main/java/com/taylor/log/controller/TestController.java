@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dianping.cat.Cat;
+import com.dianping.cat.message.Transaction;
 import com.taylor.log.entity.Test;
 import com.taylor.log.service.TestService;
 
@@ -24,10 +25,19 @@ public class TestController extends BaseAction {
 	@ResponseBody
 	@RequestMapping("/query")
 	public List<Test> queryTest(Test test, HttpServletRequest request, HttpServletResponse response) {
-		Cat.logEvent("error", "this is a test");
-		Cat.newTransaction("test", "hahahahahahahah");
-		log.debug("这只是一个测试");
-		log.info("这又是一个测试");
+		Transaction t = Cat.newTransaction("test", "hahahahahahahah");
+		try {
+			Cat.logEvent("test", "hello world~");
+			Cat.logMetricForCount("PayCount");
+			Cat.logMetricForSum("PayCount", 123);
+			t.setStatus(Transaction.SUCCESS);
+		} catch (Exception e) {
+			t.setStatus(e);
+			e.printStackTrace();
+		} finally {
+			t.complete();
+		}
+
 		return testService.queryTest(test);
 	}
 
