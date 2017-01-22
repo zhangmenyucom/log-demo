@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dianping.cat.Cat;
 import com.dianping.cat.message.Transaction;
+import com.taylor.log.cat.CatTransaction;
 import com.taylor.log.entity.Test;
 import com.taylor.log.service.TestService;
 
 @RequestMapping("/test")
 @Controller
+@CatTransaction
 public class TestController extends BaseAction {
 
 	@Autowired
